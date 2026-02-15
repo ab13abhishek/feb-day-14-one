@@ -13,13 +13,23 @@ import {
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song-dto';
+import type { Connection } from 'src/common/constants/connection';
 
-@Controller({
-  path: 'songs',
-  scope: Scope.REQUEST,
-})
+import { Inject } from '@nestjs/common';
+
+// @Controller({
+//   path: 'songs',
+//   scope: Scope.REQUEST,
+// })
+@Controller('songs')
 export class SongsController {
-  constructor(private songsService: SongsService) {}
+  constructor(
+    private songsService: SongsService,
+    @Inject('CONNECTION')
+    private connection: Connection,
+  ) {
+    console.log('Connection in SongsController:', this.connection);
+  }
   @Get()
   findAll() {
     // return 'returns all songs';
